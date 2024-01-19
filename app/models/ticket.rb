@@ -1,3 +1,9 @@
+#/
+# Class Ticket
+# Contains the information for submitted Tickets by users.
+# Tickets can be open or closed.
+# /
+
 class Ticket < ApplicationRecord
 
   belongs_to :region
