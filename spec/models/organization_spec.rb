@@ -23,5 +23,9 @@ RSpec.describe Organization, type: :model do
     expect(organization).to respond_to(:description)
   end
 
+  it "has a liability insurance" do
+    expect(organization).to respond_to(:liability_insurance)
+  end
+
   # TODO: Add tests for attr_accesor
 end
