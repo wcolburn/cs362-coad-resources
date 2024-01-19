@@ -82,4 +82,9 @@ RSpec.describe Organization, type: :model do
   it "has an agreement_eight" do
     expect(organization).to respond_to(:agreement_eight)
   end
+
+  it "has and belongs to resource_categories" do
+    should have_and_belong_to_many(:resource_categories).class_name("ResourceCategory")
+  end
+
 end
