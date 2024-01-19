@@ -19,4 +19,8 @@ RSpec.describe Ticket, type: :model do
     expect(ticket).to respond_to(:closed)
   end
 
+  it "belongs to region" do
+    should belong_to(:region).class_name("Region")
+  end
+
 end
