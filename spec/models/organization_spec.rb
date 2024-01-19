@@ -19,4 +19,9 @@ RSpec.describe Organization, type: :model do
     expect(organization).to respond_to(:email)
   end
 
+  it "has a description" do
+    expect(organization).to respond_to(:description)
+  end
+
+  # TODO: Add tests for attr_accesor
 end
