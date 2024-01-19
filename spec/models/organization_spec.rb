@@ -31,5 +31,9 @@ RSpec.describe Organization, type: :model do
     expect(organization).to respond_to(:rejection_reason)
   end
 
+  it "has a primary name" do
+    expect(organization).to respond_to(:primary_name)
+  end
+
   # TODO: Add tests for attr_accesor
 end
