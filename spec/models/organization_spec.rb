@@ -27,5 +27,9 @@ RSpec.describe Organization, type: :model do
     expect(organization).to respond_to(:liability_insurance)
   end
 
+  it "has a rejection reason" do
+    expect(organization).to respond_to(:rejection_reason)
+  end
+
   # TODO: Add tests for attr_accesor
 end
