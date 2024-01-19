@@ -87,4 +87,8 @@ RSpec.describe Organization, type: :model do
     should have_and_belong_to_many(:resource_categories).class_name("ResourceCategory")
   end
 
+  it "has many users" do
+    should have_many(:users).class_name("User")
+  end
+
 end
