@@ -11,4 +11,8 @@ RSpec.describe Organization, type: :model do
     expect(organization).to respond_to(:status)
   end
 
+  it "has a phone" do
+    expect(organization).to respond_to(:phone)
+  end
+
 end
