@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
-  it "exists" do
-    Ticket.new
+  let(:ticket) {Ticket.new}
+
+  it "has a name" do
+    expect(ticket).to respond_to(:name)
   end
+
 end
