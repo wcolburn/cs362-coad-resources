@@ -47,5 +47,9 @@ RSpec.describe Organization, type: :model do
     expect(organization).to respond_to(:title)
   end
 
+  it "has a transportation" do
+    expect(organization).to respond_to(:transportation)
+  end
+
   # TODO: Add tests for attr_accesor
 end
