@@ -43,5 +43,9 @@ RSpec.describe Organization, type: :model do
     expect(organization).to respond_to(:secondary_phone)
   end
 
+  it "has a title" do
+    expect(organization).to respond_to(:title)
+  end
+
   # TODO: Add tests for attr_accesor
 end
