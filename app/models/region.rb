@@ -1,3 +1,8 @@
+#/
+# Class Region
+# Describes local Regions where disasters may have occurred.
+# /
+
 class Region < ApplicationRecord
 
   has_many :tickets
