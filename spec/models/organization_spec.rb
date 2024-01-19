@@ -91,4 +91,8 @@ RSpec.describe Organization, type: :model do
     should have_many(:users).class_name("User")
   end
 
+  it "has many tickets" do
+    should have_many(:tickets).class_name("Ticket")
+  end
+
 end
