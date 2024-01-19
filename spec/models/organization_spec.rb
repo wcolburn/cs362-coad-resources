@@ -7,4 +7,8 @@ RSpec.describe Organization, type: :model do
     expect(organization).to respond_to(:name)
   end
 
+  it "has a status" do
+    expect(organization).to respond_to(:status)
+  end
+
 end
