@@ -27,4 +27,8 @@ RSpec.describe Ticket, type: :model do
     should belong_to(:resource_category).class_name("ResourceCategory")
   end
 
+  it "belongs to organization" do
+    should belong_to(:organization).class_name("Organization")
+  end
+
 end
