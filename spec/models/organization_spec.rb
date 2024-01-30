@@ -95,4 +95,8 @@ RSpec.describe Organization, type: :model do
     should have_many(:tickets).class_name("Ticket")
   end
 
+  it "validates length of email is at least 1 and at most 255" do
+    should validate_length_of(:email).is_at_least(1).is_at_most(255)
+  end
+
 end
