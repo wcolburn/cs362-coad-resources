@@ -17,4 +17,8 @@ RSpec.describe Region, type: :model do
     should have_many(:tickets).class_name("Ticket")
   end
 
+  it "validates length of name is at least 1 and at most 255" do
+    should validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create)
+  end
+
 end
