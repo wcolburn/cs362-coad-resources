@@ -99,4 +99,11 @@ RSpec.describe Organization, type: :model do
     should validate_length_of(:email).is_at_least(1).is_at_most(255)
   end
 
+  it "validates format of email" do
+    should allow_values("email@provider.com").for(:email)
+    should_not allow_values("email@provider").for(:email)
+    should_not allow_values("email.com").for(:email)
+    should_not allow_values("@provider.com").for(:email)
+  end
+
 end
