@@ -118,4 +118,8 @@ RSpec.describe Organization, type: :model do
     should validate_uniqueness_of(:name).case_insensitive
   end
 
+  it "validates length of description is at most 1020" do
+    should validate_length_of(:description).is_at_most(1020).on(:create)
+  end
+
 end
