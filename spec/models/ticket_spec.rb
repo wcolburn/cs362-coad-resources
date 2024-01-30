@@ -31,4 +31,12 @@ RSpec.describe Ticket, type: :model do
     should belong_to(:organization).class_name("Organization")
   end
 
+  it "validates length of name is at least 1 and at most 255" do
+    should validate_length_of(:name).is_at_least(1).is_at_most(255).on(:create)
+  end
+
+  it "validates length of description is at most 1020" do
+    should validate_length_of(:description).is_at_most(1020).on(:create)
+  end
+
 end
