@@ -25,4 +25,9 @@ RSpec.describe Region, type: :model do
     should validate_uniqueness_of(:name).case_insensitive
   end
 
+  it "returns string of name" do
+    region.name = "Bend"
+    expect(region.to_s).to eq("Bend")
+  end
+
 end
