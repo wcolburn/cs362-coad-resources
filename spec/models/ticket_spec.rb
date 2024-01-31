@@ -55,4 +55,13 @@ RSpec.describe Ticket, type: :model do
     expect(ticket.open?).to eq(false)
   end
 
+  it "captured? returns true if organization is not null" do
+    ticket.organization = Organization.new
+    expect(ticket.captured?).to eq(true)
+  end
+
+  it "captured? returns false if organization is not null" do
+    expect(ticket.captured?).to eq(false)
+  end
+
 end
