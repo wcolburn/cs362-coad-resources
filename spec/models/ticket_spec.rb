@@ -39,4 +39,10 @@ RSpec.describe Ticket, type: :model do
     should validate_length_of(:description).is_at_most(1020).on(:create)
   end
 
+  it "validates plausible phone number" do
+    should allow_values("31301234123").for(:phone)
+    should_not allow_values("123").for(:phone)
+    should_not allow_values("12345678910000").for(:phone)
+  end
+
 end
