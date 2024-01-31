@@ -137,4 +137,9 @@ RSpec.describe Organization, type: :model do
     expect(organization.status).to eq("submitted")
   end
 
+  it "returns string of name" do
+    organization.name = "FDC"
+    expect(organization.to_s).to eq("FDC")
+  end
+
 end
