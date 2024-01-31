@@ -45,4 +45,14 @@ RSpec.describe Ticket, type: :model do
     should_not allow_values("12345678910000").for(:phone)
   end
 
+  it "open? returns true if not closed" do
+    ticket.closed = false
+    expect(ticket.open?).to eq(true)
+  end
+
+  it "open? returns false if closed" do
+    ticket.closed = true
+    expect(ticket.open?).to eq(false)
+  end
+
 end
