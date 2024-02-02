@@ -30,4 +30,14 @@ RSpec.describe Region, type: :model do
     expect(region.to_s).to eq("Bend")
   end
 
+  it "Region.unspecified creates a Region with a name of Unspecified if none exists" do
+    Region.where(name: "Unspecified").destroy_all
+    expect(Region.unspecified.name).to eq("Unspecified")
+  end
+
+  it "Region.unspecified returns an existing Region with a name of Unspecified if it exists" do
+    r = Region.create!(name:"Unspecified")
+    expect(Region.unspecified).to eq(r)
+  end
+
 end
