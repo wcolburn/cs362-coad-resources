@@ -69,17 +69,23 @@ RSpec.describe Ticket, type: :model do
   end
 
   it "closed scope method returns all closed Tickets" do
-    r1 = Region.new(name:"Bend")
-    rc1 = ResourceCategory.new(name:"Food")
-    r2 = Region.new(name:"Redmond")
-    rc2 = ResourceCategory.new(name:"Water")
-    r1.save!
-    rc1.save!
-    r2.save!
-    rc2.save!
-    t1 = Ticket.create(closed:true, name:"Closed Ticket", phone:"31301234123", region_id:r1.id, resource_category_id:rc1.id)
-    t2 = Ticket.create(closed:false, name:"Open Ticket", phone:"31301234123", region_id:r2.id, resource_category_id:rc2.id)
+    r1 = Region.create!(name:"Bend")
+    rc1 = ResourceCategory.create!(name:"Food")
+    r2 = Region.create!(name:"Redmond")
+    rc2 = ResourceCategory.create!(name:"Water")
+    t1 = Ticket.create!(closed:true, name:"Closed Ticket", phone:"31301234123", region_id:r1.id, resource_category_id:rc1.id)
+    t2 = Ticket.create!(closed:false, name:"Open Ticket", phone:"31301234123", region_id:r2.id, resource_category_id:rc2.id)
     expect(Ticket.closed.map(&:name)).to eq(["Closed Ticket"])
+  end
+
+  it "open scope method returns all opened Tickets" do
+    r1 = Region.create!(name:"Bend")
+    rc1 = ResourceCategory.create!(name:"Food")
+    r2 = Region.create!(name:"Redmond")
+    rc2 = ResourceCategory.create!(name:"Water")
+    t1 = Ticket.create!(closed:true, name:"Closed Ticket", phone:"31301234123", region_id:r1.id, resource_category_id:rc1.id)
+    t2 = Ticket.create!(closed:false, name:"Open Ticket", phone:"31301234123", region_id:r2.id, resource_category_id:rc2.id)
+    expect(Ticket.open.map(&:name)).to eq(["Open Ticket"])
   end
 
 end
