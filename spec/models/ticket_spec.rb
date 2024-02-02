@@ -60,8 +60,12 @@ RSpec.describe Ticket, type: :model do
     expect(ticket.captured?).to eq(true)
   end
 
-  it "captured? returns false if organization is not null" do
+  it "captured? returns false if organization is null" do
     expect(ticket.captured?).to eq(false)
+  end
+
+  it "to_s returns a string with the ticket id" do
+    expect(ticket.to_s).to eq("Ticket #{ticket.id}")
   end
 
 end
