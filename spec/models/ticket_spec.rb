@@ -108,6 +108,7 @@ RSpec.describe Ticket, type: :model do
     r2 = Region.create!(name:"Redmond")
     rc2 = ResourceCategory.create!(name:"Water")
     t2 = Ticket.create!(closed:false, name:"Open Ticket", phone:"31301234123", region_id:r2.id, resource_category_id:rc2.id, organization_id: org2.id)
+    t3 = Ticket.create!(closed:true, name:"Closed Ticket", phone:"31301234123", region_id:r1.id, resource_category_id:rc1.id, organization_id: org1.id)
     expect(Ticket.organization org1.id).to eq([t1])
   end
 
