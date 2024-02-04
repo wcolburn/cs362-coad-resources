@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
-  let(:organization) { Organization.new}
+  let(:organization) { build(:organization)}
 
   it "has a name" do
     expect(organization).to respond_to(:name)
