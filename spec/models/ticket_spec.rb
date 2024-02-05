@@ -102,16 +102,12 @@ RSpec.describe Ticket, type: :model do
   end
 
   it "closed_organization returns all closed tickets that match the given id" do
-    org1 = Organization.create!(name: "Test Organization 1", email:"test1@example.net", phone:"31301234123", secondary_phone:"31301234123", primary_name:"Test 1", secondary_name:"Test")
-    org2 = Organization.create!(name: "Test Organization 2", email:"test2@example.net", phone:"31301234123", secondary_phone:"31301234123", primary_name:"Test 2", secondary_name:"Test")
-    r1 = Region.create!(name:"Bend")
-    rc1 = ResourceCategory.create!(name:"Food")
-    t1 = Ticket.create!(closed:false, name:"Closed Ticket", phone:"31301234123", region_id:r1.id, resource_category_id:rc1.id, organization_id: org1.id)
-    r2 = Region.create!(name:"Redmond")
-    rc2 = ResourceCategory.create!(name:"Water")
-    t2 = Ticket.create!(closed:false, name:"Open Ticket", phone:"31301234123", region_id:r2.id, resource_category_id:rc2.id, organization_id: org2.id)
-    t3 = Ticket.create!(closed:true, name:"Closed Ticket", phone:"31301234123", region_id:r1.id, resource_category_id:rc1.id, organization_id: org1.id)
-    expect(Ticket.closed_organization org1.id).to eq([t3])
+    org1 = create(:organization)
+    org2 = create(:organization)
+    open_ticket_with_org1 = create(:ticket, closed:false, region_id:db_region_1.id, resource_category_id:db_resource_category_1.id, organization_id: org1.id)
+    closed_ticket_with_org2 = create(:ticket, closed:true, region_id:db_region_2.id, resource_category_id:db_resource_category_2.id, organization_id: org2.id)
+    closed_ticket_with_org1 = create(:ticket, closed:true, region_id:db_region_1.id, resource_category_id:db_resource_category_1.id, organization_id: org1.id)
+    expect(Ticket.closed_organization org1.id).to eq([closed_ticket_with_org1])
   end
 
   it "region returns all tickets that match the given region id" do
