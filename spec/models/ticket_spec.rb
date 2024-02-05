@@ -32,7 +32,7 @@ RSpec.describe Ticket, type: :model do
   end
 
   it "belongs to organization" do
-    should belong_to(:organization).class_name("Organization")
+    should belong_to(:organization).class_name("Organization").optional
   end
 
   it "validates length of name is at least 1 and at most 255" do
