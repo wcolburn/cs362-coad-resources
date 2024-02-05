@@ -111,13 +111,10 @@ RSpec.describe Ticket, type: :model do
   end
 
   it "region returns all tickets that match the given region id" do
-    r1 = Region.create!(name:"Bend")
-    rc1 = ResourceCategory.create!(name:"Food")
-    t1 = Ticket.create!(closed:false, name:"Closed Ticket", phone:"31301234123", region_id:r1.id, resource_category_id:rc1.id)
-    r2 = Region.create!(name:"Redmond")
-    rc2 = ResourceCategory.create!(name:"Water")
-    t2 = Ticket.create!(closed:false, name:"Open Ticket", phone:"31301234123", region_id:r2.id, resource_category_id:rc2.id)
-    expect(Ticket.region r1.id).to eq([t1])
+    open_ticket_with_region1 = create(:ticket, closed:false, region_id:db_region_1.id, resource_category_id:db_resource_category_1.id)
+    open_ticket_with_region2 = create(:ticket, closed:false, region_id:db_region_2.id, resource_category_id:db_resource_category_2.id)
+    closed_ticket_with_region1 = create(:ticket, closed:true, region_id:db_region_1.id, resource_category_id:db_resource_category_1.id)
+    expect(Ticket.region db_region_1.id).to eq([open_ticket_with_region1, closed_ticket_with_region1])
   end
 
   it "resource_category returns all tickets that match the given resource_category id" do
