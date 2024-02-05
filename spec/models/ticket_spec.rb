@@ -79,13 +79,9 @@ RSpec.describe Ticket, type: :model do
   end
 
   it "open scope method returns all opened Tickets" do
-    r1 = Region.create!(name:"Bend")
-    rc1 = ResourceCategory.create!(name:"Food")
-    r2 = Region.create!(name:"Redmond")
-    rc2 = ResourceCategory.create!(name:"Water")
-    t1 = Ticket.create!(closed:true, name:"Closed Ticket", phone:"31301234123", region_id:r1.id, resource_category_id:rc1.id)
-    t2 = Ticket.create!(closed:false, name:"Open Ticket", phone:"31301234123", region_id:r2.id, resource_category_id:rc2.id)
-    expect(Ticket.open.map(&:name)).to eq(["Open Ticket"])
+    closed_ticket = create(:ticket, closed:true, region_id:db_region_1.id, resource_category_id:db_resource_category_1.id)
+    open_ticket = create(:ticket, closed:false, region_id:db_region_2.id, resource_category_id:db_resource_category_2.id)
+    expect(Ticket.open).to eq([open_ticket])
   end
 
   it "all_organization returns all open tickets with a valid organization" do
