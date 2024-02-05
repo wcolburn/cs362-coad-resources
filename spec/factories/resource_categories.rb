@@ -1,4 +1,4 @@
-Factorybot.define do
+FactoryBot.define do
   factory :resource_category do
     name
   end
