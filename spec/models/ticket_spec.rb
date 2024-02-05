@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
   let(:ticket) { build(:ticket)}
+  let(:db_region_1) { create(:region) }
+  let(:db_resource_category_1) { create(:resource_category) }
+  let(:db_region_2) { create(:region) }
+  let(:db_resource_category_2) { create(:resource_category) }
 
   it "has a name" do
     expect(ticket).to respond_to(:name)
@@ -69,12 +73,8 @@ RSpec.describe Ticket, type: :model do
   end
 
   it "closed scope method returns all closed Tickets" do
-    r1 = create(:region)
-    rc1 = create(:resource_category)
-    r2 = create(:region)
-    rc2 = create(:resource_category)
-    closed_ticket = create(:ticket, closed:true, region_id:r1.id, resource_category_id:rc1.id)
-    open_ticket = create(:ticket, closed:false, region_id:r2.id, resource_category_id:rc2.id)
+    closed_ticket = create(:ticket, closed:true, region_id:db_region_1.id, resource_category_id:db_resource_category_1.id)
+    open_ticket = create(:ticket, closed:false, region_id:db_region_2.id, resource_category_id:db_resource_category_2.id)
     expect(Ticket.closed).to eq([closed_ticket])
   end
 
