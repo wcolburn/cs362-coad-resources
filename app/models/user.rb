@@ -1,3 +1,8 @@
+/
+Class User
+Contains a user's role in the DRN and personal information
+*/
+
 class User < ApplicationRecord
 
   enum role: [:admin, :organization]
