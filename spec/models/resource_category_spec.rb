@@ -1,18 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe ResourceCategory, type: :model do
+    let(:resource) { build(:resource_category)}
 
     it "exists" do
         ResourceCategory.new
     end
 
     it "Has a name" do
-        resource = ResourceCategory.new
         expect(resource).to respond_to(:name)
     end
 
     it "has an active" do
-        resource = ResourceCategory.new
         expect(resource).to respond_to(:active)
     end
 
@@ -37,21 +36,18 @@ RSpec.describe ResourceCategory, type: :model do
     end
 
     it "activate sets active to true" do
-        resource=ResourceCategory.new
         resource.active=false
         resource.activate
         expect(resource.active).to eq(true)
     end
 
     it "deactivate sets active to false" do
-        resource=ResourceCategory.new
         resource.active=true
         resource.deactivate
         expect(resource.active).to eq(false)
     end
 
     it "inactive? returns state of active" do
-        resource=ResourceCategory.new
         resource.active=false
         expect(resource.inactive?).to eq(true)
         resource.active=true
@@ -59,7 +55,6 @@ RSpec.describe ResourceCategory, type: :model do
     end
 
     it "to_s returns name" do
-        resource = ResourceCategory.new
         resource.name = "money"
         expect(resource.to_s).to eq("money")
     end
@@ -79,8 +74,7 @@ RSpec.describe ResourceCategory, type: :model do
         activeResource1.activate
         activeResource2=create(:resource_category)
         activeResource2.activate
-        inactiveResource=create(:resource_category)
-        inactiveResource.deactivate
+        resource.deactivate
         expect(ResourceCategory.active).to eq([activeResource1, activeResource2])
     end
 
@@ -90,7 +84,7 @@ RSpec.describe ResourceCategory, type: :model do
         inactiveResource2=create(:resource_category)
         inactiveResource2.deactivate
         activeResource=create(:resource_category)
-        activeResource.activate
+       resource.activate
         expect(ResourceCategory.inactive).to eq([inactiveResource1, inactiveResource2])
     end
 end

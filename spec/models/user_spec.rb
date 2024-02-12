@@ -1,18 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+    let(:user) { build(:user)}
 
     it "exists" do
         User.new
     end
 
     it "Has an email" do
-        user = User.new
         expect(user).to respond_to(:email)
     end
 
     it "Has a role" do
-        user = User.new
         expect(user).to respond_to(:role)
     end
 
@@ -48,14 +47,12 @@ RSpec.describe User, type: :model do
     end
 
     it "Sets default role to organization if undefined" do
-        user = User.new
         user.role=nil
         user.set_default_role
         expect(user.role).to eq("organization")
     end
 
     it "to_s returns email" do
-        user = User.new
         user.email = "jim@gmail.com"
         expect(user.to_s).to eq("jim@gmail.com")
     end
