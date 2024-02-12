@@ -63,4 +63,14 @@ RSpec.describe ResourceCategory, type: :model do
         resource.name = "money"
         expect(resource.to_s).to eq("money")
     end
+
+    it "ResourceCategory.unspecified creates a ResourceCategory with a name of Unspecified if none exists" do
+        ResourceCategory.where(name: "Unspecified").destroy_all
+        expect(ResourceCategory.unspecified.name).to eq("Unspecified")
+    end
+    
+    it "ResourceCategory.unspecified returns an existing ResourceCategory with a name of Unspecified if it exists" do
+        r = ResourceCategory.create!(name:"Unspecified")
+        expect(ResourceCategory.unspecified).to eq(r)
+    end
 end
