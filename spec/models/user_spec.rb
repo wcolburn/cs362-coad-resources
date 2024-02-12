@@ -46,4 +46,17 @@ RSpec.describe User, type: :model do
     it "Validates length of password is at least 7 and at most 255" do
         should validate_length_of(:password).is_at_least(7).is_at_most(255).on(:create)
     end
+
+    it "Sets default role to organization if undefined" do
+        user = User.new
+        user.role=nil
+        user.set_default_role
+        expect(user.role).to eq("organization")
+    end
+
+    it "to_s returns email" do
+        user = User.new
+        user.email = "jim@gmail.com"
+        expect(user.to_s).to eq("jim@gmail.com")
+    end
 end
