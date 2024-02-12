@@ -70,7 +70,27 @@ RSpec.describe ResourceCategory, type: :model do
     end
     
     it "ResourceCategory.unspecified returns an existing ResourceCategory with a name of Unspecified if it exists" do
-        r = ResourceCategory.create!(name:"Unspecified")
-        expect(ResourceCategory.unspecified).to eq(r)
+        resource = ResourceCategory.create!(name:"Unspecified")
+        expect(ResourceCategory.unspecified).to eq(resource)
+    end
+
+    it "active scope method returns all active ResourceCategory" do
+        activeResource1=create(:resource_category)
+        activeResource1.activate
+        activeResource2=create(:resource_category)
+        activeResource2.activate
+        inactiveResource=create(:resource_category)
+        inactiveResource.deactivate
+        expect(ResourceCategory.active).to eq([activeResource1, activeResource2])
+    end
+
+    it "inactive scope method returns all inactive ResourceCategory" do
+        inactiveResource1=create(:resource_category)
+        inactiveResource1.deactivate
+        inactiveResource2=create(:resource_category)
+        inactiveResource2.deactivate
+        activeResource=create(:resource_category)
+        activeResource.activate
+        expect(ResourceCategory.inactive).to eq([inactiveResource1, inactiveResource2])
     end
 end
