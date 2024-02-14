@@ -7,5 +7,9 @@ FactoryBot.define do
     primary_name { "Test" }
     secondary_name { "Org" }
     secondary_phone { "31301234123" }
+
+    trait :approved do
+      status { "approved" }
+    end
   end
 end
