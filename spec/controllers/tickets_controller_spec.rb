@@ -36,4 +36,40 @@ RSpec.describe TicketsController, type: :controller do
     it { expect(get(:show, params: { id: ticket.id })).to be_successful }
   end
 
+  describe 'POST #create' do
+    let(:region) { create(:region) }
+    let(:resource_category) { create(:resource_category) }
+
+    context 'success' do
+      let(:params) do
+        {
+          ticket: {
+            name: 'Fake Ticket',
+            phone: '555-555-5555',
+            description: 'Fake Description',
+            region_id: region.id,
+            resource_category_id: resource_category.id
+          }
+        }
+      end
+
+      specify { expect(post(:create, params: params)).to redirect_to ticket_submitted_path }
+    end
+
+    context 'failure' do
+      let(:params) do
+        {
+          ticket: {
+            name: nil,
+            phone: nil,
+            description: nil,
+            resource_category_id: nil
+          }
+        }
+      end
+
+      specify { expect(post(:create, params: params)).to be_successful }
+    end
+  end
+
 end
