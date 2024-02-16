@@ -7,6 +7,7 @@ RSpec.describe TicketsController, type: :controller do
   let(:organization_unapproved) { create(:user, :organization_unapproved) }
   let(:admin) { create(:user, :admin) }
   let(:admin_unapproved) { create(:user, :organization_unapproved, :admin) }
+  let(:admin_approved) { create(:user, :organization_approved, :admin) }
 
 
   describe 'GET #new' do
@@ -107,9 +108,50 @@ RSpec.describe TicketsController, type: :controller do
         expect(post(:capture, params: { id: ticket.id })).to redirect_to(dashboard_path)
       end
     end
-
   end
 
 
+  describe 'POST #release' do
+
+    it "approved organization user releases tickets" do
+      sign_in organization_approved
+      ticket = create(:ticket, :region, :resource_category, organization_id: organization_approved.organization_id)
+      post(:release, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path << '#tickets:organization')
+    end
+
+    it "no redirect if not own ticket" do
+      sign_in organization_approved
+      other_organization = create(:organization)
+      ticket = create(:ticket, :region, :resource_category, organization_id: other_organization.id)
+      post(:release, params: { id: ticket.id })
+      expect(response).to be_successful
+    end
+
+    it "Unapproved organization redirects to dashboard" do
+      sign_in organization_unapproved
+      post(:release, params: { id: ticket.id })
+      expect(response).to redirect_to dashboard_path
+    end
+
+    it "Unapproved admin redirects to dashboard" do
+      sign_in admin_unapproved
+      post(:release, params: { id: ticket.id })
+      expect(response).to redirect_to dashboard_path
+    end
+
+    it "Approved admin releases ticket" do
+      sign_in admin_approved
+      ticket = create(:ticket, :region, :resource_category, organization_id: admin_approved.organization_id)
+      post(:release, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path << '#tickets:captured')
+    end
+
+    it "redirects to dashboard if not logged in" do
+      post(:release, params: { id: ticket.id })
+      expect(response).to redirect_to dashboard_path
+    end
+
+  end
 
 end
