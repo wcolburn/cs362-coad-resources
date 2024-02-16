@@ -8,9 +8,11 @@ RSpec.describe TicketsController, type: :controller do
   let(:admin) { create(:user, :admin) }
   let(:admin_unapproved) { create(:user, :organization_unapproved, :admin) }
 
+
   describe 'GET #new' do
     it { expect(get(:new)).to be_successful }
   end
+
 
   describe 'GET #show for approved organization user succeeds' do
     before do
@@ -20,6 +22,7 @@ RSpec.describe TicketsController, type: :controller do
     it { expect(get(:show, params: { id: ticket.id })).to be_successful }
   end
 
+
   describe 'GET #show for unapproved organization user redirects to dashboard' do
     before do
       sign_in organization_unapproved
@@ -28,6 +31,7 @@ RSpec.describe TicketsController, type: :controller do
     it { expect(get(:show, params: { id: ticket.id })).to redirect_to dashboard_path }
   end
 
+
   describe 'GET #show for admin user succeeds' do
     before do
       sign_in admin_unapproved
@@ -35,6 +39,7 @@ RSpec.describe TicketsController, type: :controller do
 
     it { expect(get(:show, params: { id: ticket.id })).to be_successful }
   end
+
 
   describe 'POST #create' do
     let(:region) { create(:region) }
@@ -52,7 +57,6 @@ RSpec.describe TicketsController, type: :controller do
           }
         }
       end
-
       specify { expect(post(:create, params: params)).to redirect_to ticket_submitted_path }
     end
 
@@ -67,9 +71,45 @@ RSpec.describe TicketsController, type: :controller do
           }
         }
       end
-
       specify { expect(post(:create, params: params)).to be_successful }
     end
   end
+
+
+  describe 'POST #capture' do
+    context 'success' do
+      before do
+        sign_in(organization_approved)
+      end
+
+      it {
+        expect(TicketService).to receive(:capture_ticket).and_return(:error)
+        post(:capture, params: {id: ticket.id})
+        expect(response).to be_successful
+      }
+    end
+
+    context 'failure' do
+      specify { expect(post(:capture, params: { id: ticket.id })).to_not be_successful }
+
+      it 'returns unsuccessful if the user is an unapproved organization' do
+        sign_in(organization_unapproved)
+        expect(post(:capture, params: { id: ticket.id })).to_not be_successful
+      end
+
+      it 'redirects to dashboard if not logged in' do
+        post(:capture, params: { id: ticket.id })
+        expect(response).to redirect_to(dashboard_path)
+      end
+
+      it 'admins return to dashboard' do
+        sign_in(admin)
+        expect(post(:capture, params: { id: ticket.id })).to redirect_to(dashboard_path)
+      end
+    end
+
+  end
+
+
 
 end
