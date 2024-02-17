@@ -112,7 +112,6 @@ RSpec.describe TicketsController, type: :controller do
 
 
   describe 'POST #release' do
-
     it "approved organization user releases tickets" do
       sign_in organization_approved
       ticket = create(:ticket, :region, :resource_category, organization_id: organization_approved.organization_id)
@@ -149,6 +148,36 @@ RSpec.describe TicketsController, type: :controller do
 
     it "redirects to dashboard if not logged in" do
       post(:release, params: { id: ticket.id })
+      expect(response).to redirect_to dashboard_path
+    end
+  end
+
+  describe "POST #close" do
+    it "approved organization user closes tickets" do
+      sign_in organization_approved
+      ticket = create(:ticket, :region, :resource_category, organization_id: organization_approved.organization_id)
+      post(:close, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path << '#tickets:organization')
+    end
+
+    it "admin releases ticket" do
+      sign_in admin
+      ticket = create(:ticket, :region, :resource_category, organization_id: admin_approved.organization_id)
+      post(:close, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path << '#tickets:open')
+    end
+
+    it "no redirect if not own ticket" do
+      sign_in organization_approved
+      other_organization = create(:organization)
+      ticket = create(:ticket, :region, :resource_category, organization_id: other_organization.id)
+      post(:close, params: { id: ticket.id })
+      expect(response).to be_successful
+    end
+
+    it "Unapproved organization redirects to dashboard" do
+      sign_in organization_unapproved
+      post(:close, params: { id: ticket.id })
       expect(response).to redirect_to dashboard_path
     end
 
