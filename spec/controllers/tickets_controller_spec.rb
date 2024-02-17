@@ -181,6 +181,15 @@ RSpec.describe TicketsController, type: :controller do
       expect(response).to redirect_to dashboard_path
     end
 
+    it "redirects to dashboard if not logged in" do
+      post(:release, params: { id: ticket.id })
+      expect(response).to redirect_to dashboard_path
+    end
+  end
+
+
+  describe "POST #close" do
+
   end
 
 end
