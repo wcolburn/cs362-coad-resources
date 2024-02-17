@@ -162,7 +162,7 @@ RSpec.describe TicketsController, type: :controller do
 
     it "admin releases ticket" do
       sign_in admin
-      ticket = create(:ticket, :region, :resource_category, organization_id: admin_approved.organization_id)
+      ticket = create(:ticket, :region, :resource_category, organization_id: admin.organization_id)
       post(:close, params: { id: ticket.id })
       expect(response).to redirect_to (dashboard_path << '#tickets:open')
     end
@@ -188,8 +188,37 @@ RSpec.describe TicketsController, type: :controller do
   end
 
 
-  describe "POST #close" do
+  describe "POST #destroy" do
+    it "approved admin destroys a ticket" do
+      sign_in admin_approved
+      post(:destroy, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path << '#tickets')
+      expect(flash[:notice]).to match(/Ticket #{ticket.id} was deleted.*/)
+    end
 
+    it "unapproved admin destroys a ticket" do
+      sign_in admin_unapproved
+      post(:destroy, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path << '#tickets')
+      expect(flash[:notice]).to match(/Ticket #{ticket.id} was deleted.*/)
+    end
+
+    it "approved organization user does not destroy a ticket" do
+      sign_in organization_approved
+      post(:destroy, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path)
+    end
+
+    it "unapproved organization user does not destroy a ticket" do
+      sign_in organization_unapproved
+      post(:destroy, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path)
+    end
+
+    it "not logged in does not destroy a ticket" do
+      post(:destroy, params: { id: ticket.id })
+      expect(response).to redirect_to (dashboard_path)
+    end
   end
 
 end
