@@ -16,4 +16,11 @@ RSpec.describe RegionsController, type: :controller do
     end
   end
 
+  describe 'GET #new' do
+    it do
+      sign_in admin
+      expect(get(:new)).to be_successful
+    end
+  end
+
 end
