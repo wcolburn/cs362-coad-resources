@@ -35,4 +35,33 @@ RSpec.describe RegionsController, type: :controller do
       expect(get(:show, params: { id: region.id })).to_not be_successful
     end
   end
+
+  describe "POST #create" do
+    before do
+      sign_in admin
+    end
+
+    context 'success' do
+      let(:params) do
+        {
+          region: {
+            name: 'Bend'
+          }
+        }
+      end
+      specify { expect(post(:create, params: params)).to redirect_to regions_path }
+    end
+
+    context 'failure' do
+      let(:params) do
+        {
+          region: {
+            name: nil
+          }
+        }
+      end
+      specify { expect(post(:create, params: params)).to be_successful }
+    end
+  end
+
 end
