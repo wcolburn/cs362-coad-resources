@@ -50,5 +50,33 @@ RSpec.describe OrganizationsController, type: :controller do
             expect(get(:new)).to be_successful
         end
     end
+
+    describe "POST #create" do
+        before do
+            sign_in organization_unapproved
+            admin # Needs admin in the system to deliver email to
+        end
+
+        context 'success' do
+            let(:params) do
+                {
+                  organization: {
+                    email: "fake@domain.com",
+                    name: "Fake Organization",
+                    phone: "31301234123",
+                    status: "approved",
+                    primary_name: "Test",
+                    secondary_name: "Org",
+                    secondary_phone: "31301234123"
+                  }
+                }
+            end
+            specify { expect(post(:create, params: params)).to redirect_to organization_application_submitted_path }
+        end
+
+        context 'failure' do
+          # TODO
+        end
+    end
     
 end
