@@ -18,12 +18,14 @@ RSpec.describe RegionsController, type: :controller do
     end
   end
 
+
   describe 'GET #new' do
     it do
       sign_in admin
       expect(get(:new)).to be_successful
     end
   end
+
 
   describe 'GET #show for admin user succeeds' do
     it "succeeds for admin" do
@@ -35,6 +37,7 @@ RSpec.describe RegionsController, type: :controller do
       expect(get(:show, params: { id: region.id })).to_not be_successful
     end
   end
+
 
   describe "POST #create" do
     before do
@@ -61,6 +64,28 @@ RSpec.describe RegionsController, type: :controller do
         }
       end
       specify { expect(post(:create, params: params)).to be_successful }
+    end
+  end
+
+
+  describe "GET #edit" do
+    it "succeeds for admin" do
+      sign_in admin
+      expect(get(:edit, params: { id: region.id })).to be_successful
+    end
+  end
+
+
+  describe "POST #update" do
+    before do
+      sign_in admin
+    end
+
+    context "succeeds" do
+      specify { expect(post(:update, params: { id: region.id, region: { name: 'New Name' } })).to redirect_to region }
+    end
+    context "fails" do
+      specify { expect(post(:update, params: { id: region.id, region: { name: "" } })).to have_http_status(:success) }
     end
   end
 
