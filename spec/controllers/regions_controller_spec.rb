@@ -91,7 +91,7 @@ RSpec.describe RegionsController, type: :controller do
 
 
   describe "POST #destroy" do
-    it "suceeds for admin" do
+    it "succeeds for admin" do
       sign_in admin
       expect(post(:destroy, params: { id: region.id })).to redirect_to regions_path
     end

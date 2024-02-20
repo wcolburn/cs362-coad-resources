@@ -81,12 +81,11 @@ RSpec.describe TicketsController, type: :controller do
     context 'success' do
       before do
         sign_in(organization_approved)
+        allow(TicketService).to receive(:capture_ticket).and_return :ok
       end
-
       it {
-        expect(TicketService).to receive(:capture_ticket).and_return(:error)
         post(:capture, params: {id: ticket.id})
-        expect(response).to be_successful
+        expect(response).to redirect_to(dashboard_path << '#tickets:open')
       }
     end
 
