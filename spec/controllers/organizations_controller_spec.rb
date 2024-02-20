@@ -75,7 +75,20 @@ RSpec.describe OrganizationsController, type: :controller do
         end
 
         context 'failure' do
-          # TODO
+            let(:params) do
+                {
+                  organization: {
+                    email: nil,
+                    name: nil,
+                    phone: nil,
+                    status: nil,
+                    primary_name: nil,
+                    secondary_name: nil,
+                    secondary_phone: nil
+                  }
+                }
+            end
+            specify { expect(post(:create, params: params)).to be_successful }
         end
     end
     
