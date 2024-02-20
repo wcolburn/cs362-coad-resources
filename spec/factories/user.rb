@@ -12,7 +12,10 @@ FactoryBot.define do
 
     trait :organization_unapproved do
       role { :organization }
-      organization_id { create(:organization, :unapproved).id }
+      organization_id { nil }
+      # Liam - changed to organization = nil
+      # Original is below:
+      # organization_id { create(:organization, :unapproved).id }
     end
 
     trait :admin do

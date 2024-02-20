@@ -44,5 +44,11 @@ RSpec.describe OrganizationsController, type: :controller do
             expect(get(:new)).to_not be_successful
         end
     end
+    describe 'GET #new succeeds' do
+        it do
+            sign_in organization_unapproved
+            expect(get(:new)).to be_successful
+        end
+    end
     
 end
