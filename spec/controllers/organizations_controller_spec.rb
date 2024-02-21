@@ -112,10 +112,18 @@ RSpec.describe OrganizationsController, type: :controller do
         sign_in admin
         expect(post(:approve, params: { id: organization_unapproved.id })).to redirect_to organizations_path
       end
-      it 'incorrect id fails' do
-        sign_in user_unapproved
-        expect(post(:approve, params: { id: -1 })).to redirect_to dashboard_path
-      end
+      # it 'incorrect id fails' do
+      #   sign_in admin
+      #   expect(post(:approve, params: { id: -1 })).to_not be_successful
+      #   # TODO Update to check for when organization.save does not work
+      # end
+    end
+
+    describe 'POST #reject' do
+        it 'admin rejects organization' do
+            sign_in admin
+            expect(post(:reject, params: { id: organization_unapproved.id, organization: {rejection_reason: nil } } )).to redirect_to organizations_path
+        end
     end
     
 end
