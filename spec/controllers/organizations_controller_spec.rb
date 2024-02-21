@@ -112,6 +112,10 @@ RSpec.describe OrganizationsController, type: :controller do
         sign_in admin
         expect(post(:approve, params: { id: organization_unapproved.id })).to redirect_to organizations_path
       end
+      it 'incorrect id fails' do
+        sign_in user_unapproved
+        expect(post(:approve, params: { id: -1 })).to redirect_to dashboard_path
+      end
     end
     
 end
