@@ -91,5 +91,18 @@ RSpec.describe OrganizationsController, type: :controller do
             specify { expect(post(:create, params: params)).to be_successful }
         end
     end
+
+
+    describe 'POST #update' do
+      before do
+        sign_in organization_approved
+      end
+      context 'succeeds' do
+          specify { expect(post(:update, params: { id: organization_approved.id, organization: { name: "New Name" } })).to redirect_to organization_path }
+      end
+      context 'fails' do
+          specify { expect(post(:update, params: { id: organization_approved.id, organization: { name: "" } })).to have_http_status(:success) }
+      end
+    end
     
 end
