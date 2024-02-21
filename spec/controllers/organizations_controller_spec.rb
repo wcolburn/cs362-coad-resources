@@ -107,11 +107,11 @@ RSpec.describe OrganizationsController, type: :controller do
       end
     end
 
-    # describe 'POST #approve' do
-    #   it 'admin approves organization' do
-    #     sign_in admin
-    #     expect(post(:approve, params: { id: organization_unapproved.id })).to redirect_to organizations_path
-    #   end
-    # end
+    describe 'POST #approve' do
+      it 'admin approves organization' do
+        sign_in admin
+        expect(post(:approve, params: { id: organization_unapproved.id })).to redirect_to organizations_path
+      end
+    end
     
 end
