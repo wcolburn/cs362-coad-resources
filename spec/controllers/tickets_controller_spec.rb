@@ -94,7 +94,13 @@ RSpec.describe TicketsController, type: :controller do
 
       it 'returns unsuccessful if the user is an unapproved organization' do
         sign_in(organization_unapproved)
-        expect(post(:capture, params: { id: ticket.id })).to_not be_successful
+        expect(post(:capture, params: { id: ticket.id })).to redirect_to dashboard_path
+      end
+
+      it 'ticket with organization cannot be captured' do
+        sign_in organization_approved
+        ticket = create(:ticket, :region, :resource_category, :organization)
+        expect(post(:capture, params: { id: ticket.id })).to be_successful
       end
 
       it 'redirects to dashboard if not logged in' do

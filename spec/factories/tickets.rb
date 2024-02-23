@@ -11,5 +11,9 @@ FactoryBot.define do
       resource_category_id { create(:resource_category).id }
     end
 
+    trait :organization do
+      organization_id { create(:organization).id }
+    end
+
   end
 end
