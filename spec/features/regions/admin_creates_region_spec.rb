@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Creating a Region', type: :feature do
 
-    it 'creates region as admin' do
+    it 'as admin' do
         admin=create(:user, :admin)
         log_in_as(admin)
         visit regions_path
