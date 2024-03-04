@@ -10,8 +10,7 @@ RSpec.describe 'Deleting a Region', type: :feature do
         click_on 'Test'
         click_on 'Delete'
         expect(current_path).to eq(regions_path)
-        expect(current_path).to_not have_text('Test')
-        /expect(current_path).to have_text('Unspecified')/
+        expect(page.body).to have_text("Region Test was deleted. Associated tickets now belong to the 'Unspecified' region.")
     end
 
 end

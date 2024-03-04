@@ -9,6 +9,6 @@ RSpec.describe 'Deleting a Resource Category', type: :feature do
         click_on 'Test'
         click_on 'Delete'
         expect(current_path).to eq(resource_categories_path)
-        expect(current_path).to_not have_text('Test')
+        expect(page.body).to have_text("Category Test was deleted.\nAssociated tickets now belong to the 'Unspecified' category.")
     end
 end
