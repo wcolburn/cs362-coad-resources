@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Rejecting an organization', type: :feature do
-
     it 'as admin' do
         admin=create(:user, :admin)
         log_in_as(admin)

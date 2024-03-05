@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Updating an Organization', type: :feature do
-    it 'as organization user' do
+    it 'as approved organization user' do
         org=create(:organization,:approved)
         user=create(:user,organization:org)
         log_in_as(user)

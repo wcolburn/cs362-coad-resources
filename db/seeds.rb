@@ -126,7 +126,7 @@ if Rails.env == 'development'
     test_user = User.new(
       email: Rails.application.secrets.user[:email],
       password: Rails.application.secrets.user[:password],
-      organization_id: Organization.find_by(email: Rails.application.secrets.user[:email]).id,
+      organization_id: nil,
       role: 1
     )
     test_user.skip_confirmation!
