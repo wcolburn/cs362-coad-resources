@@ -15,4 +15,8 @@ RSpec.describe DashboardHelper, type: :helper do
     admin = create(:user, :admin)
     expect(helper.dashboard_for(admin)).to eq('admin_dashboard')
   end
+  it "returns submitted dashboard for submitted user" do
+    user = create(:user, :organization_submitted)
+    expect(helper.dashboard_for(user)).to eq('organization_submitted_dashboard')
+  end
 end

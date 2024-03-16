@@ -13,7 +13,9 @@ RSpec.describe 'Creating an Organization Application', type: :feature do
         choose('organization[agreement_five]', option: 'I agree')
         choose('organization[agreement_six]', option: 'I agree')
         choose('organization[agreement_seven]', option: 'I agree')
-        choose('organization[agreement_eight]', option: 'I agree')/
+        choose('organization[agreement_eight]', option: 'I agree')
+        couldn't figure out the radio buttons and I guess the website
+        doesn't require them to apply/
         fill_in 'Organization Name', with: 'test org'
         click_on 'Apply'
     end

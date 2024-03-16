@@ -20,6 +20,7 @@ RSpec.describe DashboardController, type: :controller do
             sign_in organization_unapproved
             expect(get(:index)).to be_successful
         end
+        
         it "get while logged out" do
             expect(get(:index)).to redirect_to(new_user_session_path)
         end
